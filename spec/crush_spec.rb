@@ -75,4 +75,16 @@ describe Crush do
       Crush["mult"].should == MockCompressor
     end
   end
+  
+  describe ".new" do
+    it "creates a new engine if found" do
+      compressor = Crush.new("application.mock", :key => "value") { "Hello World" }
+      compressor.args.should =~ [ "application.mock", { :key => "value" } ]
+      compressor.block.call.should == "Hello World"
+    end
+    
+    it "raises an error if no engine is found" do
+      expect { Crush.new("file.php") }.to raise_error(Crush::EngineNotFound)
+    end
+  end
 end
