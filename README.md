@@ -22,10 +22,16 @@ you can initialize the engine directly.
 ```ruby
 require "uglifier"
 require "jsmin"
+require "crush"
 Crush::Uglifier.new("application.js").compress
+```
 
-# or
+Or you could use `Crush.prefer` to tell Crush which engine you'd like to use.
 
+```ruby
+require "uglifier"
+require "jsmin"
+require "crush"
 Crush.prefer(Crush::Uglifier)
 Crush.new("application.js").compress
 ```
