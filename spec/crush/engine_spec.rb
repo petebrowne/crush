@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe Crush::Engine do
-  class MockEngine < Crush::Engine; end
+  class MockEngine < Crush::Engine
+  end
   
   describe "#file" do
     it "returns the file the engine was initialized with" do
@@ -27,6 +28,40 @@ describe Crush::Engine do
     it "returns the data from the given block" do
       engine = MockEngine.new("application.js") { "Hello" }
       engine.data.should == "Hello"
+    end
+  end
+  
+  class InitializingMockEngine < Crush::Engine
+    class << self
+      attr_accessor :initialized_count
+    end
+
+    def initialize_engine
+      self.class.initialized_count += 1
+    end
+  end
+  
+  describe "#initialize_engine" do
+    it "is called one time to require the library" do
+      InitializingMockEngine.initialized_count = 0
+      InitializingMockEngine.new
+      InitializingMockEngine.initialized_count.should == 1
+      InitializingMockEngine.new
+      InitializingMockEngine.initialized_count.should == 1
+    end
+  end
+  
+  class InitializedMockEngine < Crush::Engine
+  end
+  
+  describe ".engine_initialized?" do
+    it "returns false before the engine has been initialized" do
+      InitializedMockEngine.engine_initialized?.should be_false
+    end
+    
+    it "returns true once the engine has been initialized" do
+      InitializedMockEngine.new
+      InitializedMockEngine.engine_initialized?.should be_true
     end
   end
 end

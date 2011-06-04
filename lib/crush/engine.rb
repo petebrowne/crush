@@ -10,6 +10,14 @@ module Crush
     # The data to cmopress; loaded from a file or given directly.
     attr_reader :data
     
+    # Used to determine if this class's initialize_engine method has
+    # been called yet.
+    @engine_initialized = false
+    class << self
+      attr_accessor :engine_initialized
+      alias :engine_initialized? :engine_initialized
+    end
+    
     # Create a new engine with the file and options specified. By
     # default, the data to compress is read from the file. When a block is given,
     # it should read data and return as a String.
@@ -24,6 +32,20 @@ module Crush
       elsif file
         File.respond_to?(:binread) ? File.binread(file) : File.read(file)
       end
+      
+      unless self.class.engine_initialized?
+        initialize_engine
+        self.class.engine_initialized = true
+      end
     end
+    
+    protected
+    
+      # Called once and only once for each template subclass the first time
+      # the engine class is initialized. This should be used to require the
+      # underlying engine library and perform any initial setup.
+      def initialize_engine
+        
+      end
   end
 end
