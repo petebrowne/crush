@@ -1,20 +1,20 @@
 module Crush
-  extend self
+  autoload :Engine, "crush/engine"
   
   class EngineNotFound < StandardError; end
   
   # Hash of registered compression engines.
-  def mappings
+  def self.mappings
     @mappings ||= Hash.new { |h, k| h[k] = [] }
   end
   
   # Ensures the extension doesn't include the "."
-  def normalize(ext)
+  def self.normalize(ext)
     ext.to_s.downcase.sub /^\./, ""
   end
   
   # Registers a compression engine for the given file extension(s).
-  def register(engine, *extensions)
+  def self.register(engine, *extensions)
     extensions.each do |ext|
       ext = normalize(ext)
       mappings[ext].unshift(engine).uniq!
@@ -22,14 +22,14 @@ module Crush
   end
   
   # Returns true when an engine exists for the given file extension.
-  def registered?(ext)
+  def self.registered?(ext)
     ext = normalize(ext)
     mappings.key?(ext) && !mappings[ext].empty?
   end
   
   # Make the given compression engine preferred. Which means,
   # it will reordered the beginning of its mapping.
-  def prefer(engine)
+  def self.prefer(engine)
     mappings.each do |ext, engines|
       if engines.include?(engine)
         engines.delete(engine)
@@ -38,9 +38,9 @@ module Crush
     end
   end
   
-  # Look for a compressor engine for the given filename or file
+  # Look for a compression engine for the given filename or file
   # extension. Return nil when no engine is found.
-  def [](path)
+  def self.[](path)
     pattern = File.basename(path.to_s).downcase
     until pattern.empty? || registered?(pattern)
       pattern.sub! /^[^.]*\.?/, ""
@@ -50,13 +50,13 @@ module Crush
     mappings[pattern].first
   end
   
-  # Create a new compressor engine for the given file using the file's extension
+  # Create a new compression engine for the given file using the file's extension
   # to determine the the engine mapping.
-  def new(path, options = {}, &block)
+  def self.new(path, options = {}, &block)
     if engine = self[path]
       engine.new path, options, &block
     else
-      raise EngineNotFound.new("No compressor engine registered for #{File.basename(path.to_s)}")
+      raise EngineNotFound.new("No compression engine registered for #{File.basename(path.to_s)}")
     end
   end
 end
