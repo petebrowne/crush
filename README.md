@@ -7,7 +7,28 @@ It is useful for asset libraries that support multiple javascript and stylesheet
 Basic Usage
 -----------
 
+```ruby
+require "uglifier"
+require "crush"
+Crush.new("application.js").compress
+```
 
+This would automatically compress the data found in the `application.js` file using Uglifier.
+Crush favors engines whose libraries have already been loaded.
+
+If you have multiple compression libraries loaded, and you want to control which one to use,
+you can initialize the engine directly.
+
+```ruby
+require "uglifier"
+require "jsmin"
+Crush::Uglifier.new("application.js").compress
+
+# or
+
+Crush.prefer(Crush::Uglifier)
+Crush.new("application.js").compress
+```
 
 Copyright
 ---------
