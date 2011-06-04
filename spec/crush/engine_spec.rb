@@ -64,4 +64,24 @@ describe Crush::Engine do
       InitializedMockEngine.engine_initialized?.should be_true
     end
   end
+  
+  class PreparingMockEngine < Crush::Engine
+    class << self
+      attr_accessor :prepared_count
+    end
+    
+    def prepare
+      self.class.prepared_count += 1
+    end
+  end
+  
+  describe "#prepare" do
+    it "is called each time an engine is created" do
+      PreparingMockEngine.prepared_count = 0
+      PreparingMockEngine.new
+      PreparingMockEngine.prepared_count.should == 1
+      PreparingMockEngine.new
+      PreparingMockEngine.prepared_count.should == 2
+    end
+  end
 end

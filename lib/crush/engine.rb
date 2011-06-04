@@ -27,16 +27,18 @@ module Crush
       @file    = file
       @options = options
       
+      unless self.class.engine_initialized?
+        initialize_engine
+        self.class.engine_initialized = true
+      end
+      
       @data = if block_given?
         yield
       elsif file
         File.respond_to?(:binread) ? File.binread(file) : File.read(file)
       end
       
-      unless self.class.engine_initialized?
-        initialize_engine
-        self.class.engine_initialized = true
-      end
+      prepare
     end
     
     protected
@@ -45,6 +47,13 @@ module Crush
       # the engine class is initialized. This should be used to require the
       # underlying engine library and perform any initial setup.
       def initialize_engine
+        
+      end
+      
+      # Do whatever preparation is necessary to setup the underlying compression
+      # engine. Called immediately after template data is loaded. Instance
+      # variables set in this method are available when #compress is called.
+      def prepare
         
       end
   end
