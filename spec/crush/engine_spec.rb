@@ -15,6 +15,8 @@ describe Crush::Engine do
     it "returns the options passed to the engine" do
       engine = MockEngine.new(nil, :foo => "bar") {}
       engine.options[:foo].should == "bar"
+      engine = MockEngine.new(:bar => "foo") {}
+      engine.options[:bar].should == "foo"
     end
   end
   

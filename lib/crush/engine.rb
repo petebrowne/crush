@@ -23,9 +23,13 @@ module Crush
     # it should read data and return as a String.
     #
     # All arguments are optional.
-    def initialize(file = nil, options = {})
-      @file    = file
-      @options = options
+    def initialize(file = nil, options = nil)
+      if file.respond_to?(:to_hash)
+        @options = file.to_hash
+      else
+        @file    = file
+        @options = options || {}
+      end
       
       unless self.class.engine_initialized?
         initialize_engine
