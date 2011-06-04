@@ -56,7 +56,7 @@ module Crush
     if engine = self[path]
       engine.new path, options, &block
     else
-      raise EngineNotFound.new("No compression engine registered for #{File.basename(path.to_s)}")
+      raise EngineNotFound.new("No compression engine registered for '#{path}'")
     end
   end
 end

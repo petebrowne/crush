@@ -75,5 +75,15 @@ module Crush
       def evaluate
         
       end
+      
+      # Like Kernel::require but issues a warning urging a manual require when
+      # running under a threaded environment.
+      def require_template_library(name)
+        if Thread.list.size > 1
+          warn "WARN: crush autoloading '#{name}' in a non thread-safe way; " +
+               "explicit require '#{name}' suggested."
+        end
+        require name
+      end
   end
 end
