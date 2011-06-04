@@ -84,4 +84,19 @@ describe Crush::Engine do
       PreparingMockEngine.prepared_count.should == 2
     end
   end
+  
+  class SimpleMockEngine < Crush::Engine
+    def evaluate
+      @data.strip
+    end
+  end
+  
+  describe "#compress" do
+    it "compresses the data using the engine" do
+      File.stub(:binread => "  hello  ", :read => "  hello  ")
+      SimpleMockEngine.new("file.txt").compile.should == "hello"
+      SimpleMockEngine.new { "  hello  " }.render.should == "hello"
+      SimpleMockEngine.new.compress("  hello  ").should == "hello"
+    end
+  end
 end

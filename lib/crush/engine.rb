@@ -41,6 +41,15 @@ module Crush
       prepare
     end
     
+    # Compresses the data. Data can be read through the file or the block
+    # given at initialization, or through passing it here directly.
+    def compress(data = nil)
+      @data = data unless data.nil?
+      evaluate
+    end
+    alias :compile :compress
+    alias :render :compress
+    
     protected
     
       # Called once and only once for each template subclass the first time
@@ -54,6 +63,12 @@ module Crush
       # engine. Called immediately after template data is loaded. Instance
       # variables set in this method are available when #compress is called.
       def prepare
+        
+      end
+      
+      # Called when it's time to compress. Return the compressed data
+      # from this method.
+      def evaluate
         
       end
   end
