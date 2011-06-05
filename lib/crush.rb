@@ -1,5 +1,6 @@
 module Crush
   autoload :Engine, "crush/engine"
+  autoload :JSMin,  "crush/jsmin"
   
   class EngineNotFound < StandardError; end
   
@@ -59,4 +60,6 @@ module Crush
       raise EngineNotFound.new("No compression engine registered for '#{path}'")
     end
   end
+  
+  register Crush::JSMin, "js"
 end
