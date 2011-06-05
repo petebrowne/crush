@@ -1,4 +1,5 @@
 require "spec_helper"
+require "closure-compiler"
 
 describe Crush::Closure::Compiler do
   it "is registered for '.js' files" do

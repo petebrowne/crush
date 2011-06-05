@@ -1,4 +1,5 @@
 require "spec_helper"
+require "jsmin"
 
 describe Crush::JSMin do
   it "is registered for '.js' files" do

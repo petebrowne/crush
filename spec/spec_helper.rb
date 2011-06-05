@@ -1,6 +1,6 @@
 require "rubygems"
 require "bundler/setup"
-Bundler.require(:default, :development)
+Bundler.require
 
 RSpec.configure do |config|
   

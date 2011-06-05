@@ -1,4 +1,5 @@
 require "spec_helper"
+require "packr"
 
 describe Crush::Packr do
   it "is registered for '.js' files" do

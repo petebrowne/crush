@@ -1,4 +1,5 @@
 require "spec_helper"
+require "uglifier"
 
 describe Crush::Uglifier do
   it "is registered for '.js' files" do
