@@ -38,8 +38,8 @@ module Crush
       
       @data = if block_given?
         yield
-      elsif file
-        File.respond_to?(:binread) ? File.binread(file) : File.read(file)
+      elsif @file
+        File.respond_to?(:binread) ? File.binread(@file) : File.read(@file)
       end
       
       prepare

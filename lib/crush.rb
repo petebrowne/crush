@@ -1,6 +1,7 @@
 module Crush
   autoload :Engine, "crush/engine"
   autoload :JSMin,  "crush/jsmin"
+  autoload :Packr,  "crush/packr"
   
   class EngineNotFound < StandardError; end
   
@@ -61,5 +62,6 @@ module Crush
     end
   end
   
-  register Crush::JSMin, "js"
+  register Crush::JSMin, "js", "min.js"
+  register Crush::Packr, "js", "pack.js"
 end
