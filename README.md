@@ -46,16 +46,18 @@ API. So this is the standard way of compressing (reading the data from the file)
 Crush.new("file.js", :mangle => true).compress
 ```
 
-You can also pass the data using a block, like Tilt:
+You can also pass the data using a block, like Tilt. Note how you still need to pass
 
 ```ruby
-Crush.new(:mangle => true) { "some data to compress" }.compress
+Crush.new("file.js", :mangle => true) { "some data to compress" }.compress
 ```
+
+Note how you still need to pass the filename, so Crush knows which engine to use.
 
 I've also included a way to pass data that is more consistent with the other compression engines:
 
 ```ruby
-Crush.new(:mangle => true).compress("some data to compress")
+Crush.new("file.js", :mangle => true).compress("some data to compress")
 ```
 
 Engines
