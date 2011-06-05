@@ -47,12 +47,12 @@ module Crush
     
     # Compresses the data. Data can be read through the file or the block
     # given at initialization, or through passing it here directly.
-    def compress(data = nil)
+    def render(data = nil)
       @data = data unless data.nil?
       evaluate
     end
-    alias :compile :compress
-    alias :render :compress
+    alias :compress :render
+    alias :compile :render
     
     protected
     
