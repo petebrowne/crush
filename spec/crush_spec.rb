@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe Crush do
   class MockCompressor
+    def self.engine_initialized?
+      true
+    end
+    
     attr_reader :args, :block
     def initialize(*args, &block)
       @args = args
@@ -10,6 +14,9 @@ describe Crush do
   end
   
   class MockCompressor2 < MockCompressor
+    def self.engine_initialized?
+      false
+    end
   end
   
   before(:all) do
@@ -66,6 +73,10 @@ describe Crush do
     
     it "returns engines matching filenames" do
       Crush["some/path/file.txt"].should == MockCompressor
+    end
+    
+    it "returns engines that are already initialized" do
+      Crush["mult"].should == MockCompressor
     end
   end
   

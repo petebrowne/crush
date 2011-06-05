@@ -54,7 +54,7 @@ module Crush
     end
     
     pattern = normalize(pattern)
-    mappings[pattern].first
+    mappings[pattern].detect(&:engine_initialized?) || mappings[pattern].first
   end
   
   # Create a new compression engine for the given file using the file's extension
