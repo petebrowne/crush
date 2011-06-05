@@ -14,8 +14,9 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "crush"
   
   s.add_development_dependency "rspec", "~> 2.6.0"
-  s.add_development_dependency "jsmin", "~> 1.0.0"
-  s.add_development_dependency "packr", "~> 3.1.0"
+  s.add_development_dependency "jsmin"
+  s.add_development_dependency "packr"
+  s.add_development_dependency "uglifier"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
