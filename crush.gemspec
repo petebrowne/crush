@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "uglifier"
   s.add_development_dependency "closure-compiler"
   s.add_development_dependency "yui-compressor"
+  s.add_development_dependency "cssmin"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
