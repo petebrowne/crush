@@ -1,11 +1,12 @@
 module Crush
-  autoload :Closure,  "crush/closure"
-  autoload :CSSMin,   "crush/cssmin"
-  autoload :Engine,   "crush/engine"
-  autoload :JSMin,    "crush/jsmin"
-  autoload :Packr,    "crush/packr"
-  autoload :Uglifier, "crush/uglifier"
-  autoload :YUI,      "crush/yui"
+  autoload :Closure,   "crush/closure"
+  autoload :CSSMin,    "crush/cssmin"
+  autoload :Engine,    "crush/engine"
+  autoload :JSMin,     "crush/jsmin"
+  autoload :Packr,     "crush/packr"
+  autoload :Rainpress, "crush/rainpress"
+  autoload :Uglifier,  "crush/uglifier"
+  autoload :YUI,       "crush/yui"
   
   class EngineNotFound < StandardError; end
   
@@ -73,5 +74,6 @@ module Crush
   register Crush::Uglifier,                  "js",  "ugly.js"
   
   register Crush::CSSMin,                    "css", "min.css"
+  register Crush::Rainpress,                 "css", "rain.css"
   register Crush::YUI::CssCompressor,        "css", "yui.css"
 end
