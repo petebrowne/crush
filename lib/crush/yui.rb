@@ -14,7 +14,7 @@ module Crush
       end
     
       def evaluate
-        @engine.compile(data)
+        @engine.compress(data)
       end
     end
   end
