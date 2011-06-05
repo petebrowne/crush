@@ -1,5 +1,6 @@
 module Crush
   autoload :Closure,  "crush/closure"
+  autoload :CSSMin,   "crush/cssmin"
   autoload :Engine,   "crush/engine"
   autoload :JSMin,    "crush/jsmin"
   autoload :Packr,    "crush/packr"
@@ -71,5 +72,6 @@ module Crush
   register Crush::Closure::Compiler,         "js",  "closure.js"
   register Crush::Uglifier,                  "js",  "ugly.js"
   
+  register Crush::CSSMin,                    "css", "min.css"
   register Crush::YUI::CssCompressor,        "css", "yui.css"
 end
