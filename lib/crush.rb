@@ -65,9 +65,11 @@ module Crush
     end
   end
   
-  register Crush::JSMin,                     "js", "min.js"
-  register Crush::Packr,                     "js", "pack.js"
-  register Crush::YUI::JavaScriptCompressor, "js", "yui.js"
-  register Crush::Closure::Compiler,         "js", "closure.js"
-  register Crush::Uglifier,                  "js", "ugly.js"
+  register Crush::JSMin,                     "js",  "min.js"
+  register Crush::Packr,                     "js",  "pack.js"
+  register Crush::YUI::JavaScriptCompressor, "js",  "yui.js"
+  register Crush::Closure::Compiler,         "js",  "closure.js"
+  register Crush::Uglifier,                  "js",  "ugly.js"
+  
+  register Crush::YUI::CssCompressor,        "css", "yui.css"
 end

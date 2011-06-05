@@ -17,5 +17,23 @@ module Crush
         @engine.compress(data)
       end
     end
+    
+    class CssCompressor < Crush::Engine
+      def self.engine_initialized?
+        !!(defined? ::YUI) && !!(defined? ::YUI::CssCompressor)
+      end
+    
+      def initialize_engine
+        require_template_library "yui/compressor"
+      end
+    
+      def prepare
+        @engine = ::YUI::CssCompressor.new(options)
+      end
+    
+      def evaluate
+        @engine.compress(data)
+      end
+    end
   end
 end

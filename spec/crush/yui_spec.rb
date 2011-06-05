@@ -20,3 +20,23 @@ describe Crush::YUI::JavaScriptCompressor do
     Crush::YUI::JavaScriptCompressor.new(:foo => "bar").compress("hello")
   end
 end
+
+describe Crush::YUI::CssCompressor do
+  it "is registered for '.js' files" do
+    Crush.mappings["css"].should include(Crush::YUI::CssCompressor)
+  end
+  
+  it "minifies using YUI::CssCompressor" do
+    compressor = mock(:compressor)
+    ::YUI::CssCompressor.should_receive(:new).with({}).and_return(compressor)
+    compressor.should_receive(:compress).with("hello").and_return("world")
+    Crush::YUI::CssCompressor.new.compress("hello").should == "world"
+  end
+  
+  it "sends options to YUI::CssCompressor" do
+    compressor = mock(:compressor)
+    ::YUI::CssCompressor.should_receive(:new).with(:foo => "bar").and_return(compressor)
+    compressor.should_receive(:compress).with("hello").and_return("world")
+    Crush::YUI::CssCompressor.new(:foo => "bar").compress("hello")
+  end
+end
