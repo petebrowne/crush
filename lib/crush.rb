@@ -1,4 +1,5 @@
 module Crush
+  autoload :Closure,  "crush/closure"
   autoload :Engine,   "crush/engine"
   autoload :JSMin,    "crush/jsmin"
   autoload :Packr,    "crush/packr"
@@ -63,7 +64,8 @@ module Crush
     end
   end
   
-  register Crush::JSMin,    "js", "min.js"
-  register Crush::Packr,    "js", "pack.js"
-  register Crush::Uglifier, "js", "ugly.js"
+  register Crush::JSMin,             "js", "min.js"
+  register Crush::Packr,             "js", "pack.js"
+  register Crush::Closure::Compiler, "js", "closure.js"
+  register Crush::Uglifier,          "js", "ugly.js"
 end
