@@ -32,7 +32,7 @@ Or you could use `Crush.prefer` to tell Crush which engine you'd like to use.
 require "uglifier"
 require "jsmin"
 require "crush"
-Crush.prefer(Crush::Uglifier)
+Crush.prefer(Crush::Uglifier) # or Crush.prefer(:uglifier)
 Crush.new("application.js").compress
 ```
 
@@ -49,15 +49,15 @@ Crush.new("file.js", :mangle => true).compress
 You can also pass the data using a block, like Tilt. Note how you still need to pass
 
 ```ruby
-Crush.new("file.js", :mangle => true) { "some data to compress" }.compress
+Crush.new(:uglifier, :mangle => true) { "some data to compress" }.compress
 ```
 
-Note how you still need to pass the filename, so Crush knows which engine to use.
+_Note how I declared which engine to use by its name (as a Symbol)._
 
 I've also included a way to pass data that is more consistent with the other compression engines:
 
 ```ruby
-Crush.new("file.js", :mangle => true).compress("some data to compress")
+Crush.new(:uglifier, :mangle => true).compress("some data to compress")
 ```
 
 Engines

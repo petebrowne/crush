@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe Crush do
   class MockCompressor
+    def self.engine_name
+      "mock"
+    end
+    
     def self.engine_initialized?
       true
     end
@@ -14,6 +18,10 @@ describe Crush do
   end
   
   class MockCompressor2 < MockCompressor
+    def self.engine_name
+      "mock2"
+    end
+    
     def self.engine_initialized?
       false
     end
@@ -21,8 +29,8 @@ describe Crush do
   
   before(:all) do
     Crush.register(MockCompressor,  "mock", ".mck", "file.txt")
-    Crush.register(MockCompressor,  "mult")
-    Crush.register(MockCompressor2, "mult")
+    Crush.register(MockCompressor,  "mult", "mlt")
+    Crush.register(MockCompressor2, "mult", "mlt")
   end
   
   describe ".mappings" do
@@ -55,35 +63,33 @@ describe Crush do
   end
   
   describe ".[]" do
-    it "returns nil when no engines are found" do
-      Crush["none"].should be_nil
-    end
-    
-    it "returns engines matching exact extension names" do
+    it "returns engines found by path when given strings" do
       Crush["mock"].should == MockCompressor
-    end
-    
-    it "returns engines matching exact file extensions" do
-      Crush[".MOCK"].should == MockCompressor
-    end
-    
-    it "returns engines matching multiple file extensions" do
-      Crush["application.js.Mock"].should == MockCompressor
-    end
-    
-    it "returns engines matching filenames" do
+      Crush["application.js.mock"].should == MockCompressor
       Crush["some/path/file.txt"].should == MockCompressor
     end
     
-    it "returns engines that are already initialized" do
-      Crush["mult"].should == MockCompressor
+    it "returns engines found by name when given symbols" do
+      Crush[:mock].should == MockCompressor
+      Crush[:mock2].should == MockCompressor2
     end
   end
   
   describe ".prefer" do
-    it "reorders the engine mappings so the given engine is returned" do
+    it "reorders the engine engines so the given engine is returned" do
       Crush.prefer(MockCompressor)
       Crush["mult"].should == MockCompressor
+    end
+    
+    it "accepts symbol names of the various engines" do
+      Crush.prefer(:mock2)
+      Crush["mult"].should == MockCompressor2
+    end
+    
+    it "limits the preference to the given extensions" do
+      Crush.prefer(:mock, "mlt")
+      Crush["mult"].should == MockCompressor2
+      Crush["mlt"].should == MockCompressor
     end
   end
   
@@ -96,6 +102,44 @@ describe Crush do
     
     it "raises an error if no engine is found" do
       expect { Crush.new("file.php") }.to raise_error(Crush::EngineNotFound)
+    end
+  end
+  
+  describe ".find_by_name" do
+    it "returns nil if the engine could not be found" do
+      Crush.find_by_name("none").should be_nil
+    end
+    
+    it "returns the registered engine with the given name" do
+      Crush.find_by_name("mock").should == MockCompressor
+      Crush.find_by_name("mock2").should == MockCompressor2
+    end
+  end
+  
+  describe ".find_by_path" do
+    it "returns nil when no engines are found" do
+      Crush.find_by_path("none").should be_nil
+    end
+    
+    it "returns engines matching exact extension names" do
+      Crush.find_by_path("mock").should == MockCompressor
+    end
+    
+    it "returns engines matching exact file extensions" do
+      Crush.find_by_path(".MOCK").should == MockCompressor
+    end
+    
+    it "returns engines matching multiple file extensions" do
+      Crush.find_by_path("application.js.Mock").should == MockCompressor
+    end
+    
+    it "returns engines matching filenames" do
+      Crush.find_by_path("some/path/file.txt").should == MockCompressor
+    end
+    
+    it "returns engines that are already initialized" do
+      Crush.instance_variable_get("@preferred_engines").delete("mult")
+      Crush.find_by_path("mult").should == MockCompressor
     end
   end
 end

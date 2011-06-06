@@ -1,6 +1,10 @@
 module Crush
   module Closure
     class Compiler < Crush::Engine
+      def self.engine_name
+        "closure"
+      end
+      
       def self.engine_initialized?
         !!(defined? ::Closure) && !!(defined? ::Closure::Compiler)
       end

@@ -2,6 +2,8 @@ require "spec_helper"
 require "yui/compressor"
 
 describe Crush::YUI::JavaScriptCompressor do
+  specify { Crush::YUI::JavaScriptCompressor.engine_name.should == "yui_js" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["js"].should include(Crush::YUI::JavaScriptCompressor)
   end
@@ -22,6 +24,8 @@ describe Crush::YUI::JavaScriptCompressor do
 end
 
 describe Crush::YUI::CssCompressor do
+  specify { Crush::YUI::CssCompressor.engine_name.should == "yui_css" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["css"].should include(Crush::YUI::CssCompressor)
   end

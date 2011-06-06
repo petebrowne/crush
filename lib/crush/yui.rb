@@ -1,6 +1,10 @@
 module Crush
   module YUI
     class JavaScriptCompressor < Crush::Engine
+      def self.engine_name
+        "yui_js"
+      end
+      
       def self.engine_initialized?
         !!(defined? ::YUI) && !!(defined? ::YUI::JavaScriptCompressor)
       end
@@ -19,6 +23,10 @@ module Crush
     end
     
     class CssCompressor < Crush::Engine
+      def self.engine_name
+        "yui_css"
+      end
+      
       def self.engine_initialized?
         !!(defined? ::YUI) && !!(defined? ::YUI::CssCompressor)
       end

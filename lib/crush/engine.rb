@@ -16,6 +16,17 @@ module Crush
     class << self
       attr_accessor :engine_initialized
       alias :engine_initialized? :engine_initialized
+      
+      # Returns a lowercase, underscored name for the engine.
+      def engine_name
+        engine_name = name.to_s.dup
+        engine_name.sub!  /^.*::/ , ""
+        engine_name.gsub! /([A-Z]+)([A-Z][a-z])/, '\1_\2'
+        engine_name.gsub! /([a-z\d])([A-Z])/, '\1_\2'
+        engine_name.tr!   "-", "_"
+        engine_name.downcase!
+        engine_name
+      end
     end
     
     # Create a new engine with the file and options specified. By

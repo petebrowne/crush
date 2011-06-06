@@ -2,6 +2,8 @@ require "spec_helper"
 require "rainpress"
 
 describe Crush::Rainpress do
+  specify { Crush::Rainpress.engine_name.should == "rainpress" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["css"].should include(Crush::Rainpress)
   end

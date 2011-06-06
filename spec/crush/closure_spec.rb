@@ -2,6 +2,8 @@ require "spec_helper"
 require "closure-compiler"
 
 describe Crush::Closure::Compiler do
+  specify { Crush::Closure::Compiler.engine_name.should == "closure" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["js"].should include(Crush::Closure::Compiler)
   end

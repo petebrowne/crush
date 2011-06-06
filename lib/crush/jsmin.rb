@@ -1,5 +1,9 @@
 module Crush
   class JSMin < Engine
+    def self.engine_name
+      "jsmin"
+    end
+    
     def self.engine_initialized?
       !!(defined? ::JSMin)
     end

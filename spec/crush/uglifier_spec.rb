@@ -2,6 +2,8 @@ require "spec_helper"
 require "uglifier"
 
 describe Crush::Uglifier do
+  specify { Crush::Uglifier.engine_name.should == "uglifier" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["js"].should include(Crush::Uglifier)
   end

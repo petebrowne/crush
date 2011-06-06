@@ -2,6 +2,8 @@ require "spec_helper"
 require "packr"
 
 describe Crush::Packr do
+  specify { Crush::Packr.engine_name.should == "packr" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["js"].should include(Crush::Packr)
   end

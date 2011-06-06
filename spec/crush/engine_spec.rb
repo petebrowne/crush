@@ -4,6 +4,12 @@ describe Crush::Engine do
   class MockEngine < Crush::Engine
   end
   
+  describe ".engine_name" do
+    it "returns an undescored version of the class name" do
+      MockEngine.engine_name.should == "mock_engine"
+    end
+  end
+  
   describe "#file" do
     it "returns the file the engine was initialized with" do
       engine = MockEngine.new("application.js") {}

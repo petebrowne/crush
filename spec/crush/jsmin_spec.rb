@@ -2,6 +2,8 @@ require "spec_helper"
 require "jsmin"
 
 describe Crush::JSMin do
+  specify { Crush::JSMin.engine_name.should == "jsmin" }
+  
   it "is registered for '.js' files" do
     Crush.mappings["js"].should include(Crush::JSMin)
   end
