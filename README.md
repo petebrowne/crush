@@ -65,16 +65,16 @@ Engines
 
 Support fo these compression engines are included:
 
-    ENGINES                    FILE EXTENSIONS    REQUIRED LIBRARIES
-    -------------------------- ------------------ ------------------
-    JSMin                      .js,  .min.js      jsmin
-    Packr                      .js,  .pack.js     packr
-    YUI::JavaScriptCompressor  .js,  .yui.js      yui/compressor
-    Closure::Compiler          .js,  .closure.js  closure-compiler
-    Uglifier                   .js,  .ugly.js     uglifier
-    CSSMin                     .css, .min.css     cssmin
-    Rainpress                  .css, .rain.css    rainpress
-    YUI::CssCompressor         .css, .yui.css     yui/compressor    
+    ENGINES                    FILE EXTENSIONS    NAME       REQUIRED LIBRARIES
+    -------------------------- ------------------ ---------- ------------------
+    JSMin                      .js,  .min.js      jsmin      jsmin
+    Packr                      .js,  .pack.js     packr      packr
+    YUI::JavaScriptCompressor  .js,  .yui.js      yui_js     yui/compressor
+    Closure::Compiler          .js,  .closure.js  closure    closure-compiler
+    Uglifier                   .js,  .ugly.js     uglifier   uglifier
+    CSSMin                     .css, .min.css     cssmin     cssmin
+    Rainpress                  .css, .rain.css    rainpress  rainpress
+    YUI::CssCompressor         .css, .yui.css     yui_css    yui/compressor    
 
 Copyright
 ---------
