@@ -46,7 +46,7 @@ API. So this is the standard way of compressing (reading the data from the file)
 Crush.new("file.js", :mangle => true).compress
 ```
 
-You can also pass the data using a block, like Tilt. Note how you still need to pass
+You can also pass the data using a block, like Tilt.
 
 ```ruby
 Crush.new(:uglifier, :mangle => true) { "some data to compress" }.compress
