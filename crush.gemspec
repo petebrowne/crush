@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "crush"
   
   s.add_development_dependency "rspec", "~> 2.6.0"
+  s.add_development_dependency "rake"
   s.add_development_dependency "jsmin"
   s.add_development_dependency "packr"
   s.add_development_dependency "uglifier"
