@@ -1,8 +1,12 @@
+require "crush/engine"
+
 module Crush
+  # Engine implementation of Douglas Crockford's
+  # JSMin JavaScript minifier. See:
+  #
+  # https://rubygems.org/gems/jsmin
   class JSMin < Engine
-    def self.engine_name
-      "jsmin"
-    end
+    self.default_mime_type = "application/javascript"
     
     def self.engine_initialized?
       !!(defined? ::JSMin)
@@ -12,8 +16,12 @@ module Crush
       require_template_library "jsmin"
     end
     
-    def evaluate
-      ::JSMin.minify(data)
+    def prepare
+      @output = nil
+    end
+    
+    def evaluate(scope, locals, &block)
+      @output ||= ::JSMin.minify(data)
     end
   end
 end

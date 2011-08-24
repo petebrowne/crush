@@ -12,6 +12,8 @@ Gem::Specification.new do |s|
   s.description = "Crush is a generic interface, like Tilt, for the various compression engines in Ruby."
 
   s.rubyforge_project = "crush"
+
+  s.add_dependency "tilt", "~> 1.3"
   
   s.add_development_dependency "rspec", "~> 2.6.0"
   s.add_development_dependency "rake"

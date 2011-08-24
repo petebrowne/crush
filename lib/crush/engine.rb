@@ -1,100 +1,55 @@
+require "tilt/template"
+
 module Crush
-  class Engine
-    # The name of the file to be compressed
-    attr_reader :file
-    
-    # A Hash of compression engine specific options. This is passed directly
-    # to the underlying engine and is not used by the generic interface.
-    attr_reader :options
-    
-    # The data to cmopress; loaded from a file or given directly.
-    attr_reader :data
-    
-    # Used to determine if this class's initialize_engine method has
-    # been called yet.
-    @engine_initialized = false
+  # Crush::Engine is an abstract class like Tilt::Template,
+  # which adds methods common to compression library APIs.
+  class Engine < Tilt::Template
     class << self
-      attr_accessor :engine_initialized
-      alias :engine_initialized? :engine_initialized
-      
-      # Returns a lowercase, underscored name for the engine.
-      def engine_name
-        engine_name = name.to_s.dup
-        engine_name.sub!  /^.*::/ , ""
-        engine_name.gsub! /([A-Z]+)([A-Z][a-z])/, '\1_\2'
-        engine_name.gsub! /([a-z\d])([A-Z])/, '\1_\2'
-        engine_name.tr!   "-", "_"
-        engine_name.downcase!
-        engine_name
+      # Convenience method of initializing an
+      # engine and immediately compressing the given
+      # data.
+      #
+      # @param String data The data to compress.
+      # @param Hash options Options to pass to the 
+      #   underlying compressor.
+      # @return String the compressed data.
+      def compress(data, options = {})
+        self.new(options).compress(data)
       end
+      alias :compile :compress
     end
     
-    # Create a new engine with the file and options specified. By
-    # default, the data to compress is read from the file. When a block is given,
-    # it should read data and return as a String.
+    # Override Tilt::Template#initialize so that it
+    # does not require a file or block. This is done
+    # so that Crush::Engines can follow the usual
+    # compressor API convention of having an instance
+    # method, #compress, which accepts the data to
+    # compress as an argument.
     #
-    # All arguments are optional.
-    def initialize(file = nil, options = nil)
-      if file.respond_to?(:to_hash)
-        @options = file.to_hash
-      else
-        @file    = file
-        @options = options || {}
+    # @see Tilt::Template#initialize
+    def initialize(file = nil, *args, &block)
+      unless block_given? or args[0].respond_to?(:to_str)
+        block = lambda { "" }
       end
-      
-      unless self.class.engine_initialized?
-        initialize_engine
-        self.class.engine_initialized = true
-      end
-      
-      @data = if block_given?
-        yield
-      elsif @file
-        File.respond_to?(:binread) ? File.binread(@file) : File.read(@file)
-      end
-      
-      prepare
+      super file, *args, &block
     end
     
-    # Compresses the data. Data can be read through the file or the block
-    # given at initialization, or through passing it here directly.
-    def render(data = nil)
-      @data = data unless data.nil?
-      evaluate
+    # Compresses the given data.
+    #
+    # @param String data The data to compress.
+    # @return String the compressed data.
+    def compress(data)
+      @data = data.to_s
+      render
     end
-    alias :compress :render
-    alias :compile :render
+    alias :compile :compress
     
     protected
     
-      # Called once and only once for each template subclass the first time
-      # the engine class is initialized. This should be used to require the
-      # underlying engine library and perform any initial setup.
-      def initialize_engine
-        
-      end
-      
-      # Do whatever preparation is necessary to setup the underlying compression
-      # engine. Called immediately after template data is loaded. Instance
-      # variables set in this method are available when #compress is called.
-      def prepare
-        
-      end
-      
-      # Called when it's time to compress. Return the compressed data
-      # from this method.
-      def evaluate
-        
-      end
-      
-      # Like Kernel::require but issues a warning urging a manual require when
-      # running under a threaded environment.
-      def require_template_library(name)
-        if Thread.list.size > 1
-          warn "WARN: crush autoloading '#{name}' in a non thread-safe way; " +
-               "explicit require '#{name}' suggested."
-        end
-        require name
-      end
+    # Crush::Engines are usually very, very simple.
+    # There's no need for them to be required to
+    # implement #prepare.
+    def prepare
+    end
   end
 end

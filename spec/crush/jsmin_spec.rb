@@ -2,14 +2,16 @@ require "spec_helper"
 require "jsmin"
 
 describe Crush::JSMin do
-  specify { Crush::JSMin.engine_name.should == "jsmin" }
-  
-  it "is registered for '.js' files" do
-    Crush.mappings["js"].should include(Crush::JSMin)
-  end
+  specify { Crush::JSMin.default_mime_type.should == "application/javascript" }
   
   it "minifies using JSMin" do
     ::JSMin.should_receive(:minify).with("hello").and_return("world")
-    Crush::JSMin.new.compress("hello").should == "world"
+    Crush::JSMin.compress("hello").should == "world"
+  end
+  
+  it "is registered with Tilt" do
+    ::JSMin.should_receive(:minify).with("hello").and_return("world")
+    Tilt.prefer Crush::JSMin
+    Tilt.new("application.js").compress("hello").should == "world"
   end
 end

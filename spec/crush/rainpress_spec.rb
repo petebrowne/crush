@@ -2,19 +2,21 @@ require "spec_helper"
 require "rainpress"
 
 describe Crush::Rainpress do
-  specify { Crush::Rainpress.engine_name.should == "rainpress" }
+  specify { Crush::Rainpress.default_mime_type.should == "text/css" }
   
-  it "is registered for '.js' files" do
-    Crush.mappings["css"].should include(Crush::Rainpress)
-  end
-  
-  it "minifies using Rainpress" do
+  it "compresses using Rainpress" do
     ::Rainpress.should_receive(:compress).with("hello", {}).and_return("world")
-    Crush::Rainpress.new.compress("hello").should == "world"
+    Crush::Rainpress.compress("hello").should == "world"
   end
   
   it "sends options to Rainpress" do
     ::Rainpress.should_receive(:compress).with("hello", :foo => "bar")
     Crush::Rainpress.new(:foo => "bar").compress("hello")
+  end
+  
+  it "is registered with Tilt" do
+    ::Rainpress.should_receive(:compress).with("hello", {}).and_return("world")
+    Tilt.prefer Crush::Rainpress
+    Tilt.new("application.css").compress("hello").should == "world"
   end
 end

@@ -2,19 +2,16 @@ require "spec_helper"
 require "packr"
 
 describe Crush::Packr do
-  specify { Crush::Packr.engine_name.should == "packr" }
+  specify { Crush::Packr.default_mime_type.should == "application/javascript" }
   
-  it "is registered for '.js' files" do
-    Crush.mappings["js"].should include(Crush::Packr)
-  end
-  
-  it "minifies using Packr" do
+  it "compresses using Packr" do
     ::Packr.should_receive(:pack).with("hello", {}).and_return("world")
-    Crush::Packr.new.compress("hello").should == "world"
+    Crush::Packr.compress("hello").should == "world"
   end
   
-  it "sends options to Packr" do
-    ::Packr.should_receive(:pack).with("hello", :foo => "bar")
-    Crush::Packr.new(:foo => "bar").compress("hello")
+  it "is registered with Tilt" do
+    ::Packr.should_receive(:pack).with("hello", {}).and_return("world")
+    Tilt.prefer Crush::Packr
+    Tilt.new("application.js").compress("hello").should == "world"
   end
 end
