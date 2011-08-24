@@ -1,5 +1,4 @@
 require "spec_helper"
-require "uglifier"
 
 describe Crush::Uglifier do
   specify { Crush::Uglifier.default_mime_type.should == "application/javascript" }

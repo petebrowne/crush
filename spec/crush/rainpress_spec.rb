@@ -1,5 +1,4 @@
 require "spec_helper"
-require "rainpress"
 
 describe Crush::Rainpress do
   specify { Crush::Rainpress.default_mime_type.should == "text/css" }

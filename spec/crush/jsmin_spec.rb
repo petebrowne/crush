@@ -1,5 +1,4 @@
 require "spec_helper"
-require "jsmin"
 
 describe Crush::JSMin do
   specify { Crush::JSMin.default_mime_type.should == "application/javascript" }

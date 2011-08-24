@@ -1,5 +1,4 @@
 require "spec_helper"
-require "cssmin"
 
 describe Crush::CSSMin do
   specify { Crush::CSSMin.default_mime_type.should == "text/css" }

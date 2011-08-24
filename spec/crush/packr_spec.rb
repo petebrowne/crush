@@ -1,5 +1,4 @@
 require "spec_helper"
-require "packr"
 
 describe Crush::Packr do
   specify { Crush::Packr.default_mime_type.should == "application/javascript" }

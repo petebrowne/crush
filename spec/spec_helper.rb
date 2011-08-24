@@ -1,7 +1,4 @@
 require "rubygems"
-require "bundler/setup"
-Bundler.require
-
-RSpec.configure do |config|
-  
-end
+require "bundler"
+Bundler.require :default, :development
+require "yui/compressor"

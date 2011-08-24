@@ -1,5 +1,4 @@
 require "spec_helper"
-require "closure-compiler"
 
 describe Crush::Closure::Compiler do
   specify { Crush::Closure::Compiler.default_mime_type.should == "application/javascript" }

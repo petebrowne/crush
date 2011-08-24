@@ -1,5 +1,4 @@
 require "spec_helper"
-require "yui/compressor"
 
 describe Crush::YUI::JavaScriptCompressor do
   specify { Crush::YUI::JavaScriptCompressor.default_mime_type.should == "application/javascript" }

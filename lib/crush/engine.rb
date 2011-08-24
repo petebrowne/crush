@@ -44,6 +44,18 @@ module Crush
     end
     alias :compile :compress
     
+    # Override to only compress if Crush.compress
+    # is true.
+    #
+    # @see Tilt::Template#render
+    def render(*args, &block)
+      if Crush.compress?
+        super
+      else
+        data
+      end
+    end
+    
     protected
     
     # Crush::Engines are usually very, very simple.
