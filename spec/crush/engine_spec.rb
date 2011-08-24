@@ -51,12 +51,4 @@ describe Crush::Engine do
       Stripper.new.compile("  data  ").should == "data"
     end
   end
-  
-  describe "#render" do
-    it "does nothing if Crush.compress is false" do
-      Crush.compress = false
-      Stripper.new.compress("  data  ").should == "  data  "
-      Crush.compress = true
-    end
-  end
 end

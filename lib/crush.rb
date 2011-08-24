@@ -2,18 +2,6 @@ require "crush/version"
 require "tilt"
 
 module Crush
-  # By default, Crush::Engines will actually compress
-  # things. But if, for some reason, you need to disable
-  # them globally:
-  #
-  #   Crush.compress = false
-  @compress = true
-  
-  class << self
-    attr_accessor :compress
-    alias :compress? :compress
-  end
-  
   require "crush/closure"
   require "crush/cssmin"
   require "crush/jsmin"
