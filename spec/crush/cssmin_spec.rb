@@ -10,7 +10,7 @@ describe Crush::CSSMin do
   
   it "is registered with Tilt" do
     ::CSSMin.should_receive(:minify).with("hello").and_return("world")
-    Tilt.prefer Crush::CSSMin
+    Tilt.register Crush::CSSMin, "css"
     Tilt.new("application.css").compress("hello").should == "world"
   end
 end

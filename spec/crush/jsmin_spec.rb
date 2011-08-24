@@ -10,7 +10,7 @@ describe Crush::JSMin do
   
   it "is registered with Tilt" do
     ::JSMin.should_receive(:minify).with("hello").and_return("world")
-    Tilt.prefer Crush::JSMin
+    Tilt.register Crush::JSMin, "js"
     Tilt.new("application.js").compress("hello").should == "world"
   end
 end

@@ -17,11 +17,11 @@ describe Crush::Uglifier do
     Crush::Uglifier.new(:foo => "bar").compress("hello")
   end
   
-  it "is registered with Tilt" do
+  it "is works with Tilt" do
     compressor = mock(:compressor)
     ::Uglifier.should_receive(:new).with({}).and_return(compressor)
     compressor.should_receive(:compile).with("hello").and_return("world")
-    Tilt.prefer Crush::Uglifier
+    Tilt.register Crush::Uglifier, "js"
     Tilt.new("application.js").compress("hello").should == "world"
   end
 end

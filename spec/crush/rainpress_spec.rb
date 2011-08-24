@@ -15,7 +15,7 @@ describe Crush::Rainpress do
   
   it "is registered with Tilt" do
     ::Rainpress.should_receive(:compress).with("hello", {}).and_return("world")
-    Tilt.prefer Crush::Rainpress
+    Tilt.register Crush::Rainpress, "css"
     Tilt.new("application.css").compress("hello").should == "world"
   end
 end

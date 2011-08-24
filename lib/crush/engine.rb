@@ -1,4 +1,4 @@
-require "tilt/template"
+require "tilt"
 
 module Crush
   # Crush::Engine is an abstract class like Tilt::Template,

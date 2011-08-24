@@ -21,7 +21,7 @@ describe Crush::YUI::JavaScriptCompressor do
     compressor = mock(:compressor)
     ::YUI::JavaScriptCompressor.should_receive(:new).with({}).and_return(compressor)
     compressor.should_receive(:compress).with("hello").and_return("world")
-    Tilt.prefer Crush::YUI::JavaScriptCompressor
+    Tilt.register Crush::YUI::JavaScriptCompressor, "js"
     Tilt.new("application.js").compress("hello").should == "world"
   end
 end
@@ -47,7 +47,7 @@ describe Crush::YUI::CssCompressor do
     compressor = mock(:compressor)
     ::YUI::CssCompressor.should_receive(:new).with({}).and_return(compressor)
     compressor.should_receive(:compress).with("hello").and_return("world")
-    Tilt.prefer Crush::YUI::CssCompressor
+    Tilt.register Crush::YUI::CssCompressor, "css"
     Tilt.new("application.css").compress("hello").should == "world"
   end
 end

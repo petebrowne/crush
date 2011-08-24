@@ -10,7 +10,7 @@ describe Crush::Packr do
   
   it "is registered with Tilt" do
     ::Packr.should_receive(:pack).with("hello", {}).and_return("world")
-    Tilt.prefer Crush::Packr
+    Tilt.register Crush::Packr, "js"
     Tilt.new("application.js").compress("hello").should == "world"
   end
 end

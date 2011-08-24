@@ -1,22 +1,12 @@
 require "crush/version"
-require "tilt"
 
 module Crush
-  require "crush/closure"
-  require "crush/cssmin"
-  require "crush/jsmin"
-  require "crush/packr"
-  require "crush/rainpress"
-  require "crush/uglifier"
-  require "crush/yui"
-  
-  Tilt.register JSMin,                     "js"
-  Tilt.register Packr,                     "js"
-  Tilt.register YUI::JavaScriptCompressor, "js"
-  Tilt.register Closure::Compiler,         "js"
-  Tilt.register Uglifier,                  "js"
-  
-  Tilt.register CSSMin,                    "css"
-  Tilt.register Rainpress,                 "css"
-  Tilt.register YUI::CssCompressor,        "css"
+  autoload :Closure,   "crush/closure"
+  autoload :CSSMin,    "crush/cssmin"
+  autoload :Engine,    "crush/engine"
+  autoload :JSMin,     "crush/jsmin"
+  autoload :Packr,     "crush/packr"
+  autoload :Rainpress, "crush/rainpress"
+  autoload :Uglifier,  "crush/uglifier"
+  autoload :YUI,       "crush/yui"
 end
