@@ -29,7 +29,7 @@ module Crush
     # @see Tilt::Template#initialize
     def initialize(file = nil, *args, &block)
       unless block_given? or args[0].respond_to?(:to_str)
-        block = lambda { "" }
+        block = Proc.new { "" }
       end
       super file, *args, &block
     end
