@@ -3,22 +3,73 @@ Crush
 
 Crush is a set of Tilt templates for the various JavaScript and CSS compression libraries in Ruby.
 
+Well, they're not really templates. They're more like engines or processors. But, anyway, they fit
+in very well with Tilt, because each one likes to do things a little differently. Tilt + Crush cures
+the headache by providing a generic API to use any of the engines you need.
 
 Basic Usage
 -----------
 
+Step 1, Install:
+
+```
+gem install crush
+```
+
+Step 2, Compress:
+
 ```ruby
 require "crush"
-Tilt.register Crush::Uglifier, "js"
+Crush.register
 Tilt.new("application.js").render
 # => compressed JavaScript...
 ```
 
-API
----
+Tilt Mappings
+-------------
+
+If you look closely at the above example, you had to call `Crush.register` before you could
+use any of the engines. That's because, by default, Crush does not automatically register
+its templates with Tilt. But, fear not, it's insanely easy to register them.
+
+```ruby
+require "crush"
+Crush.register
+# or you can use this shortcut to do the same thing:
+require "crush/all"
+```
+
+If you only want to use the JavaScript templates:
+
+```ruby
+require "crush"
+Crush.register_js
+# or just:
+require "crush/js"
+```
+
+CSS engines only:
+
+```ruby
+require "crush"
+Crush.register_css
+# or, because I love shortcuts so much:
+require "crush/css"
+```
+
+And finally, it's not hard to register only the ones you need, manually:
+
+```ruby
+require "crush"
+Tilt.register Crush::Uglifier, "js"
+Tilt.register Crush::Rainpress, "css"
+```
+
+Generic API
+-----------
 
 The included templates are actually subclasses of `Crush::Engine`, which adds a few
-methods common to compression libraries.
+methods somewhat common to compression libraries.
 
 `Crush::Engine.compress` takes the given string and immediately compresses it. It is also
 aliased as `compile`.
@@ -43,8 +94,8 @@ engine.compress "body { color: red; }"
 # => "body{color:red;}"
 ```
 
-Engines
--------
+Included Engines
+----------------
 
 Support fo these compression engines are included:
 

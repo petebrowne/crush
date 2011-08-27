@@ -1,3 +1,4 @@
+require "tilt"
 require "crush/version"
 
 module Crush
