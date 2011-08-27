@@ -10,7 +10,7 @@ module Crush
       self.default_mime_type = "application/javascript"
       
       def self.engine_initialized?
-        !!(defined? ::Closure && defined? ::Closure::Compiler)
+        !!(defined?(::Closure) && defined?(::Closure::Compiler))
       end
     
       def initialize_engine

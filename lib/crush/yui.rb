@@ -10,7 +10,7 @@ module Crush
       self.default_mime_type = "application/javascript"
       
       def self.engine_initialized?
-        !!(defined? ::YUI && defined? ::YUI::JavaScriptCompressor)
+        !!(defined?(::YUI) && defined?(::YUI::JavaScriptCompressor))
       end
     
       def initialize_engine
@@ -35,7 +35,7 @@ module Crush
       self.default_mime_type = "text/css"
       
       def self.engine_initialized?
-        !!(defined? ::YUI && defined? ::YUI::CssCompressor)
+        !!(defined?(::YUI) && defined?(::YUI::CssCompressor))
       end
     
       def initialize_engine
