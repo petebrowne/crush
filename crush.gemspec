@@ -5,17 +5,17 @@ require "crush/version"
 Gem::Specification.new do |s|
   s.name        = "crush"
   s.version     = Crush::VERSION
-  s.authors     = %w(Pete Browne)
+  s.authors     = [ "Pete Browne" ]
   s.email       = "me@petebrowne.com"
   s.homepage    = "http://github.com/petebrowne/crush"
-  s.summary     = "A generic interface to multiple Ruby compression engines."
-  s.description = "Crush is a generic interface, like Tilt, for the various compression engines in Ruby."
+  s.summary     = "Tilt templates for various JavaScript and CSS compression libraries."
+  s.description = "Crush is a set of Tilt templates for the various JavaScript and CSS compression libraries in Ruby."
 
   s.rubyforge_project = "crush"
 
   s.add_dependency "tilt", "~> 1.3"
   
-  s.add_development_dependency "rspec", "~> 2.6.0"
+  s.add_development_dependency "rspec", "~> 2.6"
   s.add_development_dependency "rake"
   s.add_development_dependency "jsmin"
   s.add_development_dependency "packr"

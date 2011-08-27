@@ -1,63 +1,46 @@
 Crush
 =====
 
-Crush is a generic interface, like Tilt, for the various compression engines in Ruby.
-It is useful for asset libraries that support multiple javascript and stylesheet compression engines.
+Crush is a set of Tilt templates for the various JavaScript and CSS compression libraries in Ruby.
+
 
 Basic Usage
 -----------
 
 ```ruby
-require "uglifier"
 require "crush"
-Crush.new("application.js").compress
-```
-
-This would automatically compress the data found in the `application.js` file using Uglifier.
-Crush favors engines whose libraries have already been loaded.
-
-If you have multiple compression libraries loaded, and you want to control which one to use,
-you can initialize the engine directly.
-
-```ruby
-require "uglifier"
-require "jsmin"
-require "crush"
-Crush::Uglifier.new("application.js").compress
-```
-
-Or you could use `Crush.prefer` to tell Crush which engine you'd like to use.
-
-```ruby
-require "uglifier"
-require "jsmin"
-require "crush"
-Crush.prefer(Crush::Uglifier) # or Crush.prefer(:uglifier)
-Crush.new("application.js").compress
+Tilt.register Crush::Uglifier, "js"
+Tilt.new("application.js").render
+# => compressed JavaScript...
 ```
 
 API
 ---
 
-There a few different ways to compress some data. The API, for the most part, follows the Tilt
-API. So this is the standard way of compressing (reading the data from the file):
+The included templates are actually subclasses of `Crush::Engine`, which adds a few
+methods common to compression libraries.
+
+`Crush::Engine.compress` takes the given string and immediately compresses it. It is also
+aliased as `compile`.
 
 ```ruby
-Crush.new("file.js", :mangle => true).compress
+Crush::CSSMin.compress "body { color: red; }"
+# => "body{color:red;}"
+
+# Using Tilt's interface:
+Tilt[:css].compress "body { color: red; }"
+# => "body{color:red;}"
 ```
 
-You can also pass the data using a block, like Tilt.
+`Crush::Engine`s do not require data from a file or block like `Tilt::Template`s. They can
+be initialized and given data through the `Crush::Engine#compress` instance method, which
+is also aliased as `compile`.
 
 ```ruby
-Crush.new(:uglifier, :mangle => true) { "some data to compress" }.compress
-```
-
-_Note how I declared which engine to use by its name (as a Symbol)._
-
-I've also included a way to pass data that is more consistent with the other compression engines:
-
-```ruby
-Crush.new(:uglifier, :mangle => true).compress("some data to compress")
+engine = Crush::CSSMin.new
+# Does not through an ArgumentError like a Tilt::Template
+engine.compress "body { color: red; }"
+# => "body{color:red;}"
 ```
 
 Engines
@@ -65,16 +48,16 @@ Engines
 
 Support fo these compression engines are included:
 
-    ENGINES                    FILE EXTENSIONS    NAME       REQUIRED LIBRARIES
-    -------------------------- ------------------ ---------- ------------------
-    JSMin                      .js,  .min.js      jsmin      jsmin
-    Packr                      .js,  .pack.js     packr      packr
-    YUI::JavaScriptCompressor  .js,  .yui.js      yui_js     yui/compressor
-    Closure::Compiler          .js,  .closure.js  closure    closure-compiler
-    Uglifier                   .js,  .ugly.js     uglifier   uglifier
-    CSSMin                     .css, .min.css     cssmin     cssmin
-    Rainpress                  .css, .rain.css    rainpress  rainpress
-    YUI::CssCompressor         .css, .yui.css     yui_css    yui/compressor    
+    ENGINES                    EXTENSIONS  REQUIRED LIBRARIES
+    -------------------------- ----------- -----------------------
+    JSMin                      .js         jsmin
+    Packr                      .js         packr
+    YUI::JavaScriptCompressor  .js         yui/compressor
+    Closure::Compiler          .js         closure-compiler
+    Uglifier                   .js         uglifier
+    CSSMin                     .css        cssmin
+    Rainpress                  .css        rainpress
+    YUI::CssCompressor         .css        yui/compressor    
 
 Copyright
 ---------
