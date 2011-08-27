@@ -3,6 +3,8 @@ Crush
 
 Crush is a set of Tilt templates for the various JavaScript and CSS compression libraries in Ruby.
 
+See here for more information about Tilt templates: [http://github.com/rtomayko/tilt](https://github.com/rtomayko/tilt)
+
 Well, they're not really templates. They're more like engines or processors. But, anyway, they fit
 in very well with Tilt, because each one likes to do things a little differently. Tilt + Crush cures
 the headache by providing a generic API to use any of the engines you need.
