@@ -50,5 +50,17 @@ describe Crush::Engine do
     it "is aliased as `compile`" do
       Stripper.new.compile("  data  ").should == "data"
     end
+    
+    it "can be used without an argument" do
+      Stripper.new { "  data  " }.compress.should == "data"
+    end
+  end
+  
+  describe "#render" do
+    it "throws an error if used without data" do
+      expect {
+        Stripper.new.render
+      }.to raise_error(ArgumentError)
+    end
   end
 end

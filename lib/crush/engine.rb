@@ -9,10 +9,10 @@ module Crush
       # engine and immediately compressing the given
       # data.
       #
-      # @param String data The data to compress.
-      # @param Hash options Options to pass to the 
+      # @param [String] data The data to compress.
+      # @param [Hash] options Options to pass to the 
       #   underlying compressor.
-      # @return String the compressed data.
+      # @return [String] the compressed data.
       def compress(data, options = {})
         self.new(options).compress(data)
       end
@@ -26,23 +26,32 @@ module Crush
     # method, #compress, which accepts the data to
     # compress as an argument.
     #
-    # @see Tilt::Template#initialize
+    # (see Tilt::Template#initialize)
     def initialize(file = nil, *args, &block)
       unless block_given? or args[0].respond_to?(:to_str)
-        block = Proc.new { "" }
+        block = Proc.new {}
       end
       super file, *args, &block
     end
     
     # Compresses the given data.
     #
-    # @param String data The data to compress.
-    # @return String the compressed data.
-    def compress(data)
-      @data = data.to_s
+    # @param [String] data The data to compress.
+    # @return [String] the compressed data.
+    def compress(data = nil)
+      @data = data.to_s unless data.nil?
       render
     end
     alias :compile :compress
+    
+    # Override Tilt::Template#render to check for
+    # data and raise an error if there isn't any.
+    #
+    # (see Tilt::Template#render)
+    def render(*args)
+      raise ArgumentError, "data must be set before rendering" if @data.nil?
+      super
+    end
     
     protected
     
