@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "yui-compressor"
   s.add_development_dependency "cssmin"
   s.add_development_dependency "rainpress"
+  s.add_development_dependency "sass"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

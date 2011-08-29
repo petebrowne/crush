@@ -10,6 +10,7 @@ module Crush
   autoload :JSMin,     "crush/jsmin"
   autoload :Packr,     "crush/packr"
   autoload :Rainpress, "crush/rainpress"
+  autoload :Sass,      "crush/sass"
   autoload :Uglifier,  "crush/uglifier"
   autoload :YUI,       "crush/yui"
   
@@ -39,6 +40,7 @@ module Crush
     Tilt.register CSSMin,             "css"
     Tilt.register Rainpress,          "css"
     Tilt.register YUI::CssCompressor, "css"
+    Tilt.register Sass::Engine,       "css"
   end
   
   # Registers all of the included engines

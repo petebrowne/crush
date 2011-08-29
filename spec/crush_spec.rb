@@ -20,6 +20,7 @@ describe Crush do
       Tilt.mappings.delete "css"
       Crush.register_css
       Tilt.mappings["css"].should == [
+        Crush::Sass::Engine,
         Crush::YUI::CssCompressor,
         Crush::Rainpress,
         Crush::CSSMin
@@ -40,6 +41,7 @@ describe Crush do
         Crush::JSMin
       ]
       Tilt.mappings["css"].should == [
+        Crush::Sass::Engine,
         Crush::YUI::CssCompressor,
         Crush::Rainpress,
         Crush::CSSMin
