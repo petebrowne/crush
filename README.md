@@ -14,13 +14,13 @@ Basic Usage
 
 Step 1, Install:
 
-```
-gem install crush
+``` bash
+$ gem install crush
 ```
 
 Step 2, Compress:
 
-```ruby
+``` ruby
 require "crush"
 Crush.register
 Tilt.new("application.js").render
@@ -34,7 +34,7 @@ If you look closely at the above example, you had to call `Crush.register` befor
 use any of the engines. That's because, by default, Crush does not automatically register
 its templates with Tilt. But, fear not, it's insanely easy to register them.
 
-```ruby
+``` ruby
 require "crush"
 Crush.register
 # or you can use this shortcut to do the same thing:
@@ -43,7 +43,7 @@ require "crush/all"
 
 If you only want to use the JavaScript templates:
 
-```ruby
+``` ruby
 require "crush"
 Crush.register_js
 # or just:
@@ -52,7 +52,7 @@ require "crush/js"
 
 CSS engines only:
 
-```ruby
+``` ruby
 require "crush"
 Crush.register_css
 # or, because I love shortcuts so much:
@@ -61,7 +61,7 @@ require "crush/css"
 
 And finally, it's not hard to register only the ones you need, manually:
 
-```ruby
+``` ruby
 require "crush"
 Tilt.register Crush::Uglifier, "js"
 Tilt.register Crush::Rainpress, "css"
@@ -76,7 +76,7 @@ methods somewhat common to compression libraries.
 `Crush::Engine.compress` takes the given string and immediately compresses it. It is also
 aliased as `compile`.
 
-```ruby
+``` ruby
 Crush::CSSMin.compress "body { color: red; }"
 # => "body{color:red;}"
 
@@ -89,7 +89,7 @@ Tilt[:css].compress "body { color: red; }"
 be initialized and given data through the `Crush::Engine#compress` instance method, which
 is also aliased as `compile`.
 
-```ruby
+``` ruby
 engine = Crush::CSSMin.new
 # Does not through an ArgumentError like a Tilt::Template
 engine.compress "body { color: red; }"
@@ -101,16 +101,17 @@ Included Engines
 
 Support fo these compression engines are included:
 
-    ENGINES                    EXTENSIONS  REQUIRED LIBRARIES
-    -------------------------- ----------- -----------------------
-    JSMin                      .js         jsmin
-    Packr                      .js         packr
-    YUI::JavaScriptCompressor  .js         yui/compressor
-    Closure::Compiler          .js         closure-compiler
-    Uglifier                   .js         uglifier
-    CSSMin                     .css        cssmin
-    Rainpress                  .css        rainpress
-    YUI::CssCompressor         .css        yui/compressor    
+    ENGINES                    FILE_EXTENSIONS  REQUIRED LIBRARIES
+    -------------------------- ---------------- -----------------------
+    JSMin                      .js              jsmin
+    Packr                      .js              packr
+    YUI::JavaScriptCompressor  .js              yui/compressor
+    Closure::Compiler          .js              closure-compiler
+    Uglifier                   .js              uglifier
+    CSSMin                     .css             cssmin
+    Rainpress                  .css             rainpress
+    YUI::CssCompressor         .css             yui/compressor
+    Sass::Engine               .css             sass
 
 Copyright
 ---------

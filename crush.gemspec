@@ -5,8 +5,8 @@ require "crush/version"
 Gem::Specification.new do |s|
   s.name        = "crush"
   s.version     = Crush::VERSION
-  s.authors     = [ "Pete Browne" ]
-  s.email       = "me@petebrowne.com"
+  s.authors     = ["Pete Browne"]
+  s.email       = ["me@petebrowne.com"]
   s.homepage    = "http://github.com/petebrowne/crush"
   s.summary     = "Tilt templates for various JavaScript and CSS compression libraries."
   s.description = "Crush is a set of Tilt templates for the various JavaScript and CSS compression libraries in Ruby."
