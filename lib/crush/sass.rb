@@ -23,12 +23,11 @@ module Crush
       end
       
       def prepare
-        @engine = ::Sass::Engine.new DEFAULT_OPTIONS.dup.merge(options)
         @output = nil
       end
       
       def evaluate(scope, locals, &block)
-        @output ||= @engine.render(data)
+        @output ||= ::Sass::Engine.new(data, DEFAULT_OPTIONS.dup.merge(options)).render
       end
     end
   end
