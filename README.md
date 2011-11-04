@@ -91,7 +91,7 @@ is also aliased as `compile`.
 
 ``` ruby
 engine = Crush::CSSMin.new
-# Does not through an ArgumentError like a Tilt::Template
+# Does not throw an ArgumentError like a Tilt::Template
 engine.compress "body { color: red; }"
 # => "body{color:red;}"
 ```
